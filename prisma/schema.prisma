@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+
+  userTypeId  String
+  userType    UserType @relation(fields: [userTypeId], references: [id])
+
+  // Set of fields according to the business use-case
+}
+
+model UserType {
+  id     String @id @default(uuid())
+  type   String @unique
+
+  users  User[]
+}
+
+
+// model StatusCodeMaster {
+//   Set of fields according to the business use-case
+// }
+
+// model Invoices {
+ //  Set of fields according to the business use-case
+// }
+
+// model SurveyCluster {
+//   Set of fields according to the business use-case
+// }
+
+// model Survey {
+//  Set of fields according to the business use-case
+// }
+
+// model SurveyIncentive {
+//   Set of fields according to the business use-case
+// }
+
+// model PartnerDetails {
+//   Set of fields according to the business use-case
+// }
+
+// model Redemption {
+//   Set of fields according to the business use-case
+// }
+
+// model Payment {
+//   Set of fields according to the business use-case
+// }
+
+// model UserSurveyLink {
+//   Set of fields according to the business use-case
+// }
